@@ -4,7 +4,7 @@ const md5 = require("md5");
 //generate secret passphrase using https://www.useapassphrase.com/
 //generate salt using https://www.random.org/passwords/?num=3&len=32&format=html&rnd=new
 
-//key variables
+//--------------key variables-------------
 const secret_1 =
   "purge dagger rants unwanted recreate cheek slimness livestock throwback haiku staple polo";
 const secret_2 =
@@ -18,6 +18,8 @@ const seperator = ".+.";
 const seprator_salt1 = "yTPC73XAjcJDypU7RGvhUap4aUBGYXpW";
 const seprator_salt2 = "tavvaL6Kd3dy87FPFaVzmyDkN4sJWwhH";
 const seprator_salt3 = "V9qjmyys2zkGaKJ9L3SP5kH7KM39R4VA";
+const final_pepper = "your_custom_salt"
+//--------------------------------------------
 
 const md5_secret_1 = md5(secret_1);
 const md5_secret_2 = md5(secret_2);
@@ -26,8 +28,9 @@ const md5_secret_4 = md5(secret_4);
 const md5_seprator_with_salt1 = md5(`${seperator}${seprator_salt1}`);
 const md5_seprator_with_salt2 = md5(`${seperator}${seprator_salt2}`);
 const md5_seprator_with_salt3 = md5(`${seperator}${seprator_salt3}`);
+const final_pepper_hash = md5(final_pepper)
 
-const original_key = `${md5_secret_1}${md5_seprator_with_salt1}${md5_secret_2}${md5_seprator_with_salt2}${md5_secret_3}${md5_seprator_with_salt3}${md5_secret_4}`;
+const original_key = `${md5_secret_1}${md5_seprator_with_salt1}${md5_secret_2}${md5_seprator_with_salt2}${md5_secret_3}${md5_seprator_with_salt3}${md5_secret_4}${final_pepper_hash}`;
 
 //shuffling original key
 function shuffleString(key_to_shuffle) {
@@ -48,6 +51,7 @@ function shuffleString(key_to_shuffle) {
 }
 
 // Example usage
-const originalString = original_key;
+const originalString = original_key.slice(0, 255);
 const shuffledString = shuffleString(originalString);
 console.log(shuffledString);
+
