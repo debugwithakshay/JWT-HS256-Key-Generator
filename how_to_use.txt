@@ -1,0 +1,7 @@
+1. //install dependencies
+npm install
+
+2. //replace key variables
+
+3. //run script to generate key
+node script.js
